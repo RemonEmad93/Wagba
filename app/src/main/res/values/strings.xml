@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Wagba</string>
+    <string name="login_status">Login to your account</string>
+    <string name="sign_up_status">Create your account</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="create_account">Don\'t have an account?</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="login">Login</string>
+    <string name="sing_up">Sign up</string>
 </resources>
