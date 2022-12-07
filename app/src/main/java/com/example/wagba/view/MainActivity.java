@@ -1,6 +1,8 @@
 package com.example.wagba.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,8 @@ import android.view.View;
 
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.view.Login;
+import com.example.wagba.viewmodel.LogOutViewModel;
+import com.example.wagba.viewmodel.LoginViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -15,9 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private LogOutViewModel logOutViewModel;
     FirebaseAuth auth;
     FirebaseUser currentUser;
-    FirebaseDatabase database;
+//    FirebaseDatabase database;
     Intent loginInt;
 //    DatabaseReference myRef;
 
@@ -28,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        logOutViewModel= new ViewModelProvider(this).get(LogOutViewModel.class);
+        logOutViewModel.getLoggedOutMutualLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loggedOut) {
+                startLoginActivity();
+                return;
+            }
+        });
+
         auth= FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         if(currentUser == null){
@@ -35,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        database = FirebaseDatabase.getInstance();
+//        database = FirebaseDatabase.getInstance();
 //        myRef = database.getReference("testx");
 //
 //        myRef.setValue("database connected");
@@ -58,9 +72,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout(){
-        FirebaseAuth.getInstance().signOut();
-        startLoginActivity();
-        return;
-
+        logOutViewModel.logOut();
     }
 }
