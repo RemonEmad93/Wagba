@@ -6,18 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.wagba.model.AppRepository;
+import com.example.wagba.model.SignInUpRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LogOutViewModel extends AndroidViewModel{
 
-    private AppRepository appRepository;
+    private SignInUpRepository appRepository;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutualLiveData;
 
     public LogOutViewModel(@NonNull Application application) {
         super(application);
-        appRepository=  new AppRepository(application);
+        appRepository=  new SignInUpRepository(application);
         userMutableLiveData= appRepository.getUserMutableLiveData();
         loggedOutMutualLiveData= appRepository.getLoggedOutMutableLiveData();
     }

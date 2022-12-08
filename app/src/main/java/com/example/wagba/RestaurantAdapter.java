@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.example.wagba.model.Restaurant;
+
 import java.util.ArrayList;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
@@ -35,7 +38,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant restaurant=restaurantArrayList.get(position);
         holder.resName.setText(restaurant.getRestaurantName());
-        holder.resImage.setImageResource(restaurant.getRestaurantImage());
+//        holder.resImage.setImageResource(restaurant.getRestaurantImage());
     }
 
     @Override
@@ -46,13 +49,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
 
         TextView resName;
-        ImageView resImage;
+//        ImageView resImage;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
 
             resName= itemView.findViewById(R.id.restaurantItemName);
-            resImage= itemView.findViewById(R.id.restaurantItemImage);
+//            resImage= itemView.findViewById(R.id.restaurantItemImage);
 
         }
     }

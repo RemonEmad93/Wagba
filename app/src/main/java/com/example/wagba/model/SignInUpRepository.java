@@ -1,16 +1,12 @@
 package com.example.wagba.model;
 
 import android.app.Application;
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.wagba.User;
-import com.example.wagba.view.Login;
-import com.example.wagba.view.MainActivity;
-import com.example.wagba.view.SignUp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AppRepository {
+public class SignInUpRepository {
 
     private Application application;
     private FirebaseAuth mAuth;
@@ -28,7 +24,7 @@ public class AppRepository {
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
 
-    public AppRepository(Application application){
+    public SignInUpRepository(Application application){
         this.application=application;
 
         mAuth =FirebaseAuth.getInstance();
