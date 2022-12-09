@@ -23,13 +23,27 @@ public class Restaurant {
 //    }
 
     private String name;
+    private String logo;
+    private String num;
 
-    public Restaurant(String name) {
+    public Restaurant() {
+    }
+
+    public Restaurant(String name, String logo, String num) {
         this.name = name;
+        this.logo=logo;
+        this.num=num;
     }
 
     public String getRestaurantName() {
         return name;
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public String getNum() {
+        return num;
+    }
 }

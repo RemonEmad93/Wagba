@@ -2,28 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/dark_blue"
-    android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/dark_blue">
 
 
-<!--    <ImageView-->
-<!--        android:id="@+id/restaurantItemImage"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_weight="1"-->
-<!--        tools:srcCompat="@tools:sample/avatars" />-->
+    <ImageView
+        android:id="@+id/restaurantItemImage"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_weight="1"
+        android:cropToPadding="false"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/restaurantItemName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
+        android:clickable="false"
+        android:elegantTextHeight="false"
         android:fontFamily="sans-serif-thin"
-        android:gravity="center"
+        android:gravity="fill"
+        android:includeFontPadding="false"
+        android:paddingLeft="5dp"
         android:text="TextView"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold" />
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:ignore="TouchTargetSizeCheck" />
 </LinearLayout>

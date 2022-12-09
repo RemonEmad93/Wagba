@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.wagba.Dishes;
 import com.example.wagba.R;
+import com.example.wagba.RestaurantRecyclerViewInterface;
 import com.example.wagba.model.Restaurant;
 import com.example.wagba.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
@@ -26,14 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RestaurantRecyclerViewInterface {
 
     private ActivityMainBinding binding;
     private LogOutViewModel logOutViewModel;
     FirebaseAuth auth;
     FirebaseUser currentUser;
     FirebaseDatabase database;
-    Intent loginInt;
+    Intent loginInt, dishInt;
     DatabaseReference myRef;
 
 //    RecyclerView recyclerView;
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    TextView b1;
+//    TextView b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 //        restaurantList.add(new Restaurant("test9",R.drawable.logo));
 //        restaurantList.add(new Restaurant("test10",R.drawable.logo));
 
-        restaurantAdapter= new RestaurantAdapter(this, restaurantList);
+        restaurantAdapter= new RestaurantAdapter(this, restaurantList, this);
 //        binding.RestaurantRecyclerView.setAdapter(restaurantAdapter);
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -101,13 +104,14 @@ public class MainActivity extends AppCompatActivity {
                 restaurantList.clear();
                 for (DataSnapshot restaurants: snapshot.child("restaurants").getChildren()){
 
-                    Restaurant restaurant= new Restaurant(restaurants.child("name").getValue(String.class));
+                    Restaurant restaurant= new Restaurant(restaurants.child("name").getValue(String.class),restaurants.child("logo").getValue().toString(),restaurants.child("num").getValue(String.class));
                     restaurantList.add(restaurant);
 
 //                    Restaurant restaurant= dataSnapshot.getValue(Restaurant.class);
 //                    restaurantList.add(restaurant);
                 }
-                binding.RestaurantRecyclerView.setAdapter(new RestaurantAdapter(MainActivity.this,restaurantList));
+//                binding.RestaurantRecyclerView.setAdapter(new RestaurantAdapter(MainActivity.this,restaurantList,restaurantRecyclerViewInterface.this));
+                binding.RestaurantRecyclerView.setAdapter(restaurantAdapter);
 //                restaurantAdapter.notifyDataSetChanged();
             }
 
@@ -127,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
 
@@ -139,5 +145,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout(){
         logOutViewModel.logOut();
+    }
+
+    @Override
+    public void onRestaurantClick(int position) {
+
+        dishInt= new Intent(this, Dishes.class);
+        dishInt.putExtra("place",restaurantList.get(position).getNum().toString());
+        Log.d("thePlace",restaurantList.get(position).getNum().toString());
+        startActivity(dishInt);
+
     }
 }

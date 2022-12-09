@@ -1,6 +1,7 @@
 package com.example.wagba;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.wagba.model.Restaurant;
 
 import java.util.ArrayList;
@@ -19,10 +21,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     Context context;
     ArrayList<Restaurant> restaurantArrayList;
+    private final RestaurantRecyclerViewInterface restaurantRecyclerViewInterface;
 
-    public RestaurantAdapter(Context context, ArrayList<Restaurant> restaurantArrayList) {
+    public RestaurantAdapter(Context context, ArrayList<Restaurant> restaurantArrayList,RestaurantRecyclerViewInterface restaurantRecyclerViewInterface) {
         this.context = context;
         this.restaurantArrayList = restaurantArrayList;
+        this.restaurantRecyclerViewInterface=restaurantRecyclerViewInterface;
     }
 
     @NonNull
@@ -31,13 +35,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         View view= LayoutInflater.from(context).inflate(R.layout.restaurant_item,parent,false);
 
-        return new RestaurantViewHolder(view);
+        return new RestaurantViewHolder(view, restaurantRecyclerViewInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant restaurant=restaurantArrayList.get(position);
         holder.resName.setText(restaurant.getRestaurantName());
+        Glide.with(holder.resImage.getContext()).load(restaurant.getLogo()).into(holder.resImage);
 //        holder.resImage.setImageResource(restaurant.getRestaurantImage());
     }
 
@@ -49,13 +54,29 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
 
         TextView resName;
-//        ImageView resImage;
+        ImageView resImage;
 
-        public RestaurantViewHolder(@NonNull View itemView) {
+        public RestaurantViewHolder(@NonNull View itemView,RestaurantRecyclerViewInterface restaurantRecyclerViewInterface) {
             super(itemView);
 
             resName= itemView.findViewById(R.id.restaurantItemName);
-//            resImage= itemView.findViewById(R.id.restaurantItemImage);
+            resImage= itemView.findViewById(R.id.restaurantItemImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(restaurantRecyclerViewInterface != null){
+
+                        int pos=getAbsoluteAdapterPosition();
+                        Log.d("viewPos",String.valueOf(pos));
+
+                        if(pos != RecyclerView.NO_POSITION){
+                            restaurantRecyclerViewInterface.onRestaurantClick(pos);
+                        }
+
+                    }
+                }
+            });
 
         }
     }

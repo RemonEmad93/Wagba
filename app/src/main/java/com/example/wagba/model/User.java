@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.model;
 
 public class User {
     public String username;
