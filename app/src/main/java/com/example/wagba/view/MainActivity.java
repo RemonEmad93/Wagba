@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     RestaurantAdapter restaurantAdapter;
     ArrayList<Restaurant> restaurantList;
 
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
+
 
 
 //    TextView b1;
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+
 
         logOutViewModel= new ViewModelProvider(this).get(LogOutViewModel.class);
         logOutViewModel.getLoggedOutMutualLiveData().observe(this, new Observer<Boolean>() {
@@ -69,6 +75,17 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
             startLoginActivity();
             return;
         }
+
+//        sp=getSharedPreferences("orderss",0);
+//        ed=sp.edit();
+//        ed.clear();
+
+
+//        ed.clear();
+//        ed.putString("chicken","1");
+//        ed.commit();
+
+//        Log.d("helpppppp",sp.getString("chicken","null"));
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
@@ -128,11 +145,6 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
             }
         });
 
-
-
-
-
-
     }
 
 
@@ -152,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 
         dishInt= new Intent(this, Dishes.class);
         dishInt.putExtra("place",restaurantList.get(position).getNum().toString());
+        dishInt.putExtra("name",restaurantList.get(position).getRestaurantName().toString());
         Log.d("thePlace",restaurantList.get(position).getNum().toString());
         startActivity(dishInt);
 

@@ -1,11 +1,15 @@
 package com.example.wagba;
 
+import static com.example.wagba.DishAdapter.DishViewHolder.flag;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityDishesBinding;
 import com.example.wagba.model.Dish;
@@ -18,8 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Dishes extends AppCompatActivity {
+public class Dishes extends AppCompatActivity implements DishRecyclerViewInterface {
 
     private ActivityDishesBinding binding;
 //    FirebaseAuth auth;
@@ -30,7 +35,14 @@ public class Dishes extends AppCompatActivity {
     DishAdapter dishAdapter;
     ArrayList<Dish> dishArrayList;
 
-    private String num;
+    private String num,name;
+
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
+
+    String[] dishes={};
+
+
 
 
     @Override
@@ -40,11 +52,23 @@ public class Dishes extends AppCompatActivity {
         View view= binding.getRoot();
         setContentView(view);
 
+
         num= getIntent().getStringExtra("place");
+        name=getIntent().getStringExtra("name");
+
+        sp=getSharedPreferences("orderss",0);
+        ed=sp.edit();
+//        ed.clear();
+//        ed.commit();
+
+//        ed.putString("restaurant",name);
+
+
 
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
+
 
 
         binding.dishRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,7 +77,7 @@ public class Dishes extends AppCompatActivity {
 
         dishArrayList= new ArrayList<>();
 
-        dishAdapter= new DishAdapter(this,dishArrayList);
+        dishAdapter= new DishAdapter(this, dishArrayList, this,num);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,7 +90,8 @@ public class Dishes extends AppCompatActivity {
                     dishArrayList.add(dish);
 
                 }
-                binding.dishRecyclerView.setAdapter(new DishAdapter(Dishes.this,dishArrayList));
+//                binding.dishRecyclerView.setAdapter(new DishAdapter(Dishes.this,dishArrayList));
+                binding.dishRecyclerView.setAdapter(dishAdapter);
 
             }
 
@@ -74,7 +99,53 @@ public class Dishes extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
+
         });
+
+
+
+
+    }
+    @Override
+    public void onBackPressed(){
+        Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+
+
+    @Override
+    public void onDishClick(int position) {
+
+        if(flag){
+            ed.putString(dishArrayList.get(position).getName().toString()+num,
+                    String.valueOf(Integer.parseInt(sp.getString(dishArrayList.get(position).getName().toString()+num,"0"))+1));
+        }else{
+            ed.putString(dishArrayList.get(position).getName().toString()+num,
+                    String.valueOf(Integer.parseInt(sp.getString(dishArrayList.get(position).getName().toString()+num,"0")) -1));
+        }
+
+        ed.commit();
+
+
+
+//        for(int i=0;i<dishes.length;i++){
+//            if(dishArrayList.get(position).getName().toString() != dishes[i] ){
+//                continue;
+//            }else{
+//                if(flag== true){
+//                    ed.putString(dishArrayList.get(position).getName().toString(),
+//                            String.valueOf(sp.getString(dishArrayList.get(position).getName().toString(),null)+1));
+//                }else{
+////                    ed.putString(dishArrayList.get(position).getName().toString(),
+////                            String.valueOf(sp.getString(Integer.parseInt(dishArrayList.get(position).getName().toString(),null))-1));
+//                }
+//
+//                sp.getAll();
+//                return;
+//            }
+//        }
 
 
     }
