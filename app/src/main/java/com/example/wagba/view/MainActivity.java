@@ -138,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
             }
         });
 
-        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
+//        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                logout();
+//            }
+//        });
 
     }
 
