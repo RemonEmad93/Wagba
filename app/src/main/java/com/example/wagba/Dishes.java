@@ -86,7 +86,7 @@ public class Dishes extends AppCompatActivity implements DishRecyclerViewInterfa
                 dishArrayList.clear();
                 for (DataSnapshot dishes: snapshot.child("restaurants/res"+num+"/dishes").getChildren()){
 
-                    Dish dish= new Dish(dishes.child("name").getValue().toString(),dishes.child("image").getValue().toString(),dishes.child("price").getValue(Integer.class));
+                    Dish dish= new Dish(dishes.child("name").getValue().toString(),dishes.child("image").getValue().toString(),dishes.child("price").getValue(Integer.class),dishes.child("availability").getValue(Boolean.class));
                     dishArrayList.add(dish);
 
                 }
@@ -109,7 +109,6 @@ public class Dishes extends AppCompatActivity implements DishRecyclerViewInterfa
     }
     @Override
     public void onBackPressed(){
-        Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
         finish();
     }
 

@@ -2,6 +2,7 @@ package com.example.wagba;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,11 +76,19 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
 
         holder.dishPrice.setText(String.valueOf(dish.getPrice())+" EGP");
 
-        if(sp.getString(dish.getName()+num,"not found") ==  "not found"){
-            holder.dishCounter.setText("0");
+        if(dish.getAvailability()){
+            if(sp.getString(dish.getName()+num,"not found") ==  "not found"){
+                holder.dishCounter.setText("0");
+            }else{
+                holder.dishCounter.setText(sp.getString(dish.getName()+num,"not found"));
+            }
         }else{
-            holder.dishCounter.setText(sp.getString(dish.getName()+num,"not found"));
+            holder.dishCounter.setText("--");
+            holder.addDish.setOnClickListener(null);
+            holder.removeDish.setOnClickListener(null);
         }
+
+
 
 
 //        if(sp.getString(dish.getName(), null) == null){
@@ -128,9 +137,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
                 public void onClick(View view) {
 
                     dishCounter.setText(String.valueOf(Integer.parseInt(dishCounter.getText().toString())+1));
-
                     flag=true;
-
                     int pos=getAbsoluteAdapterPosition();
                     dishRecyclerViewInterface.onDishClick(pos);
 
