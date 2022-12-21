@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.wagba.Cart;
 import com.example.wagba.Dishes;
 import com.example.wagba.R;
 import com.example.wagba.RestaurantRecyclerViewInterface;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     FirebaseAuth auth;
     FirebaseUser currentUser;
     FirebaseDatabase database;
-    Intent loginInt, dishInt;
+    Intent loginInt, dishInt, cartInt;
     DatabaseReference myRef;
 
 //    RecyclerView recyclerView;
@@ -58,6 +59,16 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         View view = binding.getRoot();
         setContentView(view);
 
+        cartInt= new Intent(this, Cart.class);
+
+
+        binding.include.cartImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(cartInt);
+
+            }
+        });
 
 
         logOutViewModel= new ViewModelProvider(this).get(LogOutViewModel.class);
@@ -79,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 //        sp=getSharedPreferences("orderss",0);
 //        ed=sp.edit();
 //        ed.clear();
+//        ed.commit();
 
 
 //        ed.clear();

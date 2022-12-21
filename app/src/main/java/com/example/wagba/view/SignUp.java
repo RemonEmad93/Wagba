@@ -29,9 +29,14 @@ public class SignUp extends AppCompatActivity {
         View view= binding.getRoot();
         setContentView(view);
 
-        homeInt = new Intent(this, MainActivity.class);
-        loginInt= new Intent(this, Login.class);
+        homeInt = new Intent(this, MainActivity.class);  //go to mainActivity page
+        loginInt= new Intent(this, Login.class);         //go to login page
 
+        binding.include.cartImageView.setVisibility(View.INVISIBLE); //hide cart icon
+        binding.include.menuImageView.setVisibility(View.GONE); //hide menu icon
+        binding.include.appName.setPadding(50,0,0,0);
+
+        //when user signUp go to mainActivity page and destroy the sign up/in activity
         signUpViewModel= new ViewModelProvider(this).get(SignUpViewModel.class);
         signUpViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
@@ -50,6 +55,7 @@ public class SignUp extends AppCompatActivity {
 //            return;
 //        }
 
+        //if user returns to login page then destroy the sign up and the opened login activity
         binding.loginPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +66,7 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
+        //sign up button
         binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,22 +75,23 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
+
+
     private void registerUser(){
         String username= binding.signUpUsername.getText().toString();
         String email= binding.signUpEmail.getText().toString();
         String password= binding.signUpPassword.getText().toString();
 
 
+        //check that user entered all data
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(!email.contains("@eng.asu.edu.eg")){
-            Toast.makeText(this, "Enter Valid email", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
+
+        //pass the entered data to viewModel
         signUpViewModel.signUp(username, email, password);
 
         /*mAuth.createUserWithEmailAndPassword(email, password)

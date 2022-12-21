@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Dishes extends AppCompatActivity implements DishRecyclerViewInterface {
 
@@ -121,8 +123,16 @@ public class Dishes extends AppCompatActivity implements DishRecyclerViewInterfa
             ed.putString(dishArrayList.get(position).getName().toString()+num,
                     String.valueOf(Integer.parseInt(sp.getString(dishArrayList.get(position).getName().toString()+num,"0"))+1));
         }else{
-            ed.putString(dishArrayList.get(position).getName().toString()+num,
-                    String.valueOf(Integer.parseInt(sp.getString(dishArrayList.get(position).getName().toString()+num,"0")) -1));
+            if(Objects.equals(sp.getString(dishArrayList.get(position).getName() + num, "0"), "1")){
+                ed.remove(dishArrayList.get(position).getName().toString()+num).commit();
+
+            }else{
+                ed.putString(dishArrayList.get(position).getName().toString()+num,
+                        String.valueOf(Integer.parseInt(sp.getString(dishArrayList.get(position).getName().toString()+num,"0")) -1));
+            }
+
+
+
         }
 
         ed.commit();

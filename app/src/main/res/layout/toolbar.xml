@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/menuImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -28,7 +28,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/cartImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
