@@ -35,26 +35,3 @@ public class LogOutViewModel extends AndroidViewModel{
     }
 
 }
-
-
-//public class LoginViewModel extends AndroidViewModel {
-//
-//    private AppRepository appRepository;
-//    private MutableLiveData<FirebaseUser> userMutableLiveData;
-//
-//    public LoginViewModel(@NonNull Application application) {
-//        super(application);
-//        appRepository=  new AppRepository(application);
-//        userMutableLiveData= appRepository.getUserMutableLiveData();
-//    }
-//
-//    public void login( String email, String password){
-//        appRepository.login(email,password);
-//    }
-//
-//    public MutableLiveData<FirebaseUser> getUserMutableLiveData(){
-//        return userMutableLiveData;
-//    }
-//
-//
-//}
