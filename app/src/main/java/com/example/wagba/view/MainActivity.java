@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import com.example.wagba.Cart;
 import com.example.wagba.Dishes;
@@ -21,7 +20,7 @@ import com.example.wagba.ProfileActivity;
 import com.example.wagba.R;
 import com.example.wagba.RestaurantRecyclerViewInterface;
 import com.example.wagba.model.Restaurant;
-import com.example.wagba.RestaurantAdapter;
+import com.example.wagba.view.Adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
 import com.example.wagba.viewmodel.LogOutViewModel;
 import com.google.firebase.auth.FirebaseAuth;

@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.view.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.wagba.R;
 import com.example.wagba.model.CartItem;
 
 import java.util.ArrayList;

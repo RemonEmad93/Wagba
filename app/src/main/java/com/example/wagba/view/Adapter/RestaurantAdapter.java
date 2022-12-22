@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.view.Adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.example.wagba.R;
+import com.example.wagba.RestaurantRecyclerViewInterface;
 import com.example.wagba.model.Restaurant;
 
 import java.util.ArrayList;

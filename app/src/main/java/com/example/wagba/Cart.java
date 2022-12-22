@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityCartBinding;
 import com.example.wagba.model.CartItem;
-import com.example.wagba.model.Dish;
+import com.example.wagba.view.Adapter.CartAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

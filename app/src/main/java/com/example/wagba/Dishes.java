@@ -1,6 +1,6 @@
 package com.example.wagba;
 
-import static com.example.wagba.DishAdapter.DishViewHolder.flag;
+import static com.example.wagba.view.Adapter.DishAdapter.DishViewHolder.flag;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,14 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityDishesBinding;
 import com.example.wagba.model.Dish;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.wagba.view.Adapter.DishAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Dishes extends AppCompatActivity implements DishRecyclerViewInterface {
