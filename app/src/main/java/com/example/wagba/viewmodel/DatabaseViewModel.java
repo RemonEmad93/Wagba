@@ -1,7 +1,6 @@
 package com.example.wagba.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -20,18 +19,14 @@ public class DatabaseViewModel extends AndroidViewModel {
         super(application);
 
         databaseRepository= new DatabaseRepository(application);
-
-//        databaseRepository= new DatabaseRepository(application);
         data= databaseRepository.getAllData();
     }
 
     public void insertProfile(DatabaseModel databaseModel){
-        Log.d("inseeeert","here1");
         databaseRepository.insert(databaseModel);
     }
 
     public LiveData<List<DatabaseModel>> getAllData(){
-        Log.d("geeeet","here1");
         return data;
     }
 }
