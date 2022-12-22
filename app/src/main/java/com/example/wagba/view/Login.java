@@ -1,6 +1,5 @@
 package com.example.wagba.view;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,11 +12,6 @@ import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityLoginBinding;
 import com.example.wagba.viewmodel.LoginViewModel;
-import com.example.wagba.viewmodel.SignUpViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
@@ -36,8 +30,12 @@ public class Login extends AppCompatActivity {
         setContentView(view);
 
         LA= this;
-        signUpInt= new Intent(this, SignUp.class);
+        signUpInt= new Intent(this, SignUpActivity.class);
         homeInt= new Intent(this, MainActivity.class);
+
+        binding.include.cartImageView.setVisibility(View.INVISIBLE); //hide cart icon
+        binding.include.menuImageView.setVisibility(View.GONE); //hide menu icon
+        binding.include.appName.setPadding(50,0,0,0); //add padding
 
         loginViewModel= new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {

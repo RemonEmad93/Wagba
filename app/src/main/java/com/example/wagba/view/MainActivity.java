@@ -10,11 +10,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.wagba.Cart;
 import com.example.wagba.Dishes;
+import com.example.wagba.ProfileActivity;
 import com.example.wagba.R;
 import com.example.wagba.RestaurantRecyclerViewInterface;
 import com.example.wagba.model.Restaurant;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     FirebaseAuth auth;
     FirebaseUser currentUser;
     FirebaseDatabase database;
-    Intent loginInt, dishInt, cartInt;
+    Intent loginInt, dishInt, cartInt, profileInt, ordersInt;
     DatabaseReference myRef;
 
 //    RecyclerView recyclerView;
@@ -60,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         setContentView(view);
 
         cartInt= new Intent(this, Cart.class);
+        profileInt= new Intent(this, ProfileActivity.class);
+
+        binding.include.menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowMenu(view);
+            }
+        });
 
 
         binding.include.cartImageView.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +170,29 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 
     }
 
+    private void ShowMenu(View view){
+        PopupMenu popupMenu=new PopupMenu(this,view);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if(item.getTitle().toString().equals("Profile")){
+                    Log.d("this","herererert43534543");
+                    startActivity(profileInt);
+                }
+                if(item.getTitle()=="Orders"){
+
+                }
+                if(item.getTitle().toString().equals("Logout")){
+                    logout();
+                }
+                return true;
+            }
+        });
+
+        popupMenu.show();
+    }
 
     private void startLoginActivity(){
         loginInt=new Intent(this, Login.class);

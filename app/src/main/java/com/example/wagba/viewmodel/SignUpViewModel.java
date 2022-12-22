@@ -10,6 +10,7 @@ import com.example.wagba.model.SignInUpRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpViewModel extends AndroidViewModel {
+
     private SignInUpRepository appRepository;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
 
@@ -19,8 +20,8 @@ public class SignUpViewModel extends AndroidViewModel {
         userMutableLiveData= appRepository.getUserMutableLiveData();
    }
 
-   public void signUp(String username, String email, String password){
-       appRepository.signUp(username,email,password);
+   public void signUp(String username, String email, String password, String phone_number){
+       appRepository.signUp(username,email,password, phone_number);
    }
 
    public MutableLiveData<FirebaseUser> getUserMutableLiveData(){

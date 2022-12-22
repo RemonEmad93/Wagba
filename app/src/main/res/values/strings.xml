@@ -10,12 +10,14 @@
     <string name="have_account">Already have an account?</string>
     <string name="login">Login</string>
     <string name="sing_up">Sign up</string>
-    <string name="logout">logout</string>
+    <string name="logout">Logout</string>
     <string name="num">0</string>
     <string name="gate">Gate</string>
     <string name="gate_A">A</string>
     <string name="gate_B">B</string>
     <string name="confirm">Confirm</string>
+    <string name="profile">Profile</string>
+    <string name="orders">Orders</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,11 +1,16 @@
 package com.example.wagba.model;
 
+
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.wagba.ProfileActivity;
+import com.example.wagba.viewmodel.DatabaseViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -17,34 +22,55 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignInUpRepository {
 
     private Application application;
+
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
 
+
     public SignInUpRepository(Application application){
+
         this.application=application;
 
         mAuth =FirebaseAuth.getInstance();
-        userMutableLiveData= new MutableLiveData<>();
-        loggedOutMutableLiveData= new MutableLiveData<>();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
+
+        userMutableLiveData= new MutableLiveData<>();
+        loggedOutMutableLiveData= new MutableLiveData<>();
     }
 
-    public void signUp(String username, String email, String password){
+    public void signUp(String username, String email, String password, String phone_number){
 
+        //add email and password to firebase authenticate
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //check if email and password added successfully
                         if (task.isSuccessful()) {
-                            User user= new User(username,email,password);
+
+
+
+//                            rDatabase= new DatabaseModel();
+//                            rDatabase.setName(username);
+//                            rDatabase.setEmail(email);
+//                            rDatabase.setPhone_number(phone_number);
+//
+//                            databaseViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(DatabaseViewModel.class);
+//                            databaseViewModel.insertProfile(rDatabase);
+
+                            // add user data to firebase DB
+                            Log.d("car",phone_number);
+                            User user= new User(username,email,password,phone_number);
                             myRef.child(mAuth.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            //pass current user id to viewModel
                                             userMutableLiveData.postValue(mAuth.getCurrentUser());
                                         }
                                     });

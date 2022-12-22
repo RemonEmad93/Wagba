@@ -9,11 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.wagba.ProfileActivity;
 import com.example.wagba.databinding.ActivitySignUpBinding;
+import com.example.wagba.model.DatabaseModel;
+import com.example.wagba.viewmodel.DatabaseViewModel;
 import com.example.wagba.viewmodel.SignUpViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
     private SignUpViewModel signUpViewModel;
@@ -21,6 +24,10 @@ public class SignUp extends AppCompatActivity {
 //    FirebaseDatabase database;
 //    DatabaseReference myRef;
     Intent homeInt,loginInt;
+
+
+    private DatabaseModel databaseModel;
+    private DatabaseViewModel databaseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +39,10 @@ public class SignUp extends AppCompatActivity {
         homeInt = new Intent(this, MainActivity.class);  //go to mainActivity page
         loginInt= new Intent(this, Login.class);         //go to login page
 
+
         binding.include.cartImageView.setVisibility(View.INVISIBLE); //hide cart icon
         binding.include.menuImageView.setVisibility(View.GONE); //hide menu icon
-        binding.include.appName.setPadding(50,0,0,0);
+        binding.include.appName.setPadding(50,0,0,0); //add padding
 
         //when user signUp go to mainActivity page and destroy the sign up/in activity
         signUpViewModel= new ViewModelProvider(this).get(SignUpViewModel.class);
@@ -81,10 +89,15 @@ public class SignUp extends AppCompatActivity {
         String username= binding.signUpUsername.getText().toString();
         String email= binding.signUpEmail.getText().toString();
         String password= binding.signUpPassword.getText().toString();
+        String phone_number=binding.editTextPhone.getText().toString();
 
+        //insert user data into room database
+        databaseModel= new DatabaseModel(username,email,phone_number);
+        databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
+        databaseViewModel.insertProfile(databaseModel);
 
         //check that user entered all data
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()){
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || phone_number.isEmpty()){
             Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -92,7 +105,7 @@ public class SignUp extends AppCompatActivity {
 
 
         //pass the entered data to viewModel
-        signUpViewModel.signUp(username, email, password);
+        signUpViewModel.signUp(username, email, password, phone_number);
 
         /*mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
