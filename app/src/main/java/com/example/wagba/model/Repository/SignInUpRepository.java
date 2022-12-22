@@ -22,8 +22,8 @@ public class SignInUpRepository {
     private Application application;
 
     private FirebaseAuth mAuth;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
@@ -50,19 +50,7 @@ public class SignInUpRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //check if email and password added successfully
                         if (task.isSuccessful()) {
-
-
-
-//                            rDatabase= new DatabaseModel();
-//                            rDatabase.setName(username);
-//                            rDatabase.setEmail(email);
-//                            rDatabase.setPhone_number(phone_number);
-//
-//                            databaseViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(DatabaseViewModel.class);
-//                            databaseViewModel.insertProfile(rDatabase);
-
                             // add user data to firebase DB
-                            Log.d("car",phone_number);
                             UserModel user= new UserModel(username,email,password,phone_number);
                             myRef.child(mAuth.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
