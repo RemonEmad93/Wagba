@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     public void onRestaurantClick(int position) {
         dishInt= new Intent(this, DishesActivity.class);
         dishInt.putExtra("place",restaurantList.get(position).getNum().toString());
-        dishInt.putExtra("name",restaurantList.get(position).getRestaurantName().toString());
         startActivity(dishInt);
     }
 }

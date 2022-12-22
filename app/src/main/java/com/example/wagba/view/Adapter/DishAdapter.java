@@ -2,7 +2,6 @@ package com.example.wagba.view.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,25 +20,15 @@ import java.util.ArrayList;
 
 public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder> {
 
-
    Context context;
    ArrayList<DishModel> dishArrayList;
    private final DishRecyclerViewInterface dishRecyclerViewInterface;
-
    String num;
-
-    public SharedPreferences sp;
-//    SharedPreferences.Editor ed;
-//    sp=getSharedPreferences("order",0);
-
-
-
-
+   public SharedPreferences sp;
 
     public DishAdapter(Context context, ArrayList<DishModel> dishArrayList, DishRecyclerViewInterface dishRecyclerViewInterface, String num) {
         sp=context.getSharedPreferences("orderss",0);
         this.num=num;
-
         this.context = context;
         this.dishArrayList = dishArrayList;
         this.dishRecyclerViewInterface=dishRecyclerViewInterface;
@@ -48,28 +37,16 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
     @NonNull
     @Override
     public DishViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        sp=getSharedPreferences("order",0);
-
         View view= LayoutInflater.from(context).inflate(R.layout.dish_item,parent,false);
-
         return new DishViewHolder(view, dishRecyclerViewInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DishAdapter.DishViewHolder holder, int position) {
 
-//        sp=getSharedPreferences("order",0);
-
-//        ed=sp.edit();
-//        ed.clear();
-
-
         DishModel dish=dishArrayList.get(position);
         Glide.with(holder.dishImage.getContext()).load(dish.getImage()).into(holder.dishImage);
         holder.dishName.setText(dish.getName());
-        Log.d("helpppppp", dish.getName());
-        Log.d("helpppppp",sp.getString(dish.getName().toString(),"not found"));
-
         holder.dishPrice.setText(String.valueOf(dish.getPrice())+" EGP");
 
         if(dish.getAvailability()){
@@ -83,15 +60,6 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
             holder.addDish.setOnClickListener(null);
             holder.removeDish.setOnClickListener(null);
         }
-
-
-
-
-//        if(sp.getString(dish.getName(), null) == null){
-//            holder.dishCounter.setText("0");
-//        }else{
-//            holder.dishCounter.setText(sp.getString(dish.getName(), null));
-//        }
     }
 
     @Override
@@ -108,14 +76,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
         TextView removeDish;
         TextView dishCounter;
 
-//        FirebaseDatabase database;
-//        DatabaseReference myRef;
-
-//        public static int currentOrder=0;
-
         public static  Boolean flag;
-//         SharedPreferences sp;
-//        sp=getSharedPreferences("order",0);
 
 
         public DishViewHolder(@NonNull View itemView,DishRecyclerViewInterface dishRecyclerViewInterface) {
@@ -131,58 +92,22 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
             addDish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     dishCounter.setText(String.valueOf(Integer.parseInt(dishCounter.getText().toString())+1));
                     flag=true;
                     int pos=getAbsoluteAdapterPosition();
                     dishRecyclerViewInterface.onDishClick(pos);
-
-//                    database = FirebaseDatabase.getInstance();
-//                    myRef = database.getReference();
-//
-//                    myRef.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                            if(snapshot.child("current order").getValue().toString().isEmpty()){
-//                                snapshot.child("current order").
-//                            }
-////                            dishArrayList.clear();
-//                            for (DataSnapshot dishes: snapshot.child("current order").getChildren()){
-//
-//
-//                                Dish dish= new Dish(dishes.child("name").getValue().toString(),dishes.child("image").getValue().toString(),dishes.child("price").getValue(Integer.class));
-//                                dishArrayList.add(dish);
-//
-//                            }
-////                binding.dishRecyclerView.setAdapter(new DishAdapter(Dishes.this,dishArrayList));
-//                            binding.dishRecyclerView.setAdapter(dishAdapter);
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//
-//
-//                    });
-
-//                    dishCounter.setText(String.valueOf(Integer.parseInt(dishCounter.getText().toString())+1));
                 }
             });
 
             removeDish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     if(Integer.parseInt(dishCounter.getText().toString()) > 0){
                         dishCounter.setText(String.valueOf(Integer.parseInt(dishCounter.getText().toString())-1));
                         flag=false;
                         int pos=getAbsoluteAdapterPosition();
                         dishRecyclerViewInterface.onDishClick(pos);
                     }
-
                 }
             });
         }
