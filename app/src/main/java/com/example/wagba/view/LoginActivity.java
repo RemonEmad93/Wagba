@@ -18,7 +18,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private LoginViewModel loginViewModel;
-//    private FirebaseAuth mAuth;
     Intent signUpInt, homeInt;
     public static Activity LA;
 
@@ -29,9 +28,9 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        LA= this;
-        signUpInt= new Intent(this, SignUpActivity.class);
-        homeInt= new Intent(this, MainActivity.class);
+        LA= this; //to destroy this activity from another one
+        signUpInt= new Intent(this, SignUpActivity.class); //go to sign up page
+        homeInt= new Intent(this, MainActivity.class);     //go to mainActivity page
 
         binding.include.cartImageView.setVisibility(View.INVISIBLE); //hide cart icon
         binding.include.menuImageView.setVisibility(View.GONE); //hide menu icon
@@ -46,13 +45,6 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
         });
-
-//        mAuth = FirebaseAuth.getInstance();
-//        if(mAuth.getCurrentUser() != null){
-//            finish();
-//            return;
-//        }
-
 
         binding.signUpPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,21 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         loginViewModel.login(email,password);
-
-        /*mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            startActivity(homeInt);
-                            finish();
-                            return;
-                        } else {
-                            Toast.makeText(Login.this, "email or password is wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
-
     }
 
 }
