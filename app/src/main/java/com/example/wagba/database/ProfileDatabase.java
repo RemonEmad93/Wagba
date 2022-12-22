@@ -14,9 +14,6 @@ public abstract class ProfileDatabase extends RoomDatabase {
     public abstract ProfileDao profileDao();
     public static ProfileDatabase instance;
 
-//    public static final String DATABASE_NAME="profile_database.db";
-//    private static final Object LOCK=new Object();
-
     public static ProfileDatabase getInstance(final Context context){
 
         if(instance== null){

@@ -19,6 +19,4 @@ public interface ProfileDao {
     @Query("SELECT * FROM profileData")
     LiveData<List<DatabaseModel>>  getAllData();
 
-//    @Update
-//    void updateProfile(ProfileDatabase profileDatabase);
 }
