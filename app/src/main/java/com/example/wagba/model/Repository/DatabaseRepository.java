@@ -1,4 +1,4 @@
-package com.example.wagba.model;
+package com.example.wagba.model.Repository;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.wagba.database.ProfileDao;
 import com.example.wagba.database.ProfileDatabase;
+import com.example.wagba.model.DatabaseModel;
 
 import java.util.List;
 import java.util.concurrent.Executor;

@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.view;
 
 import static com.example.wagba.view.Adapter.DishAdapter.DishViewHolder.flag;
 
@@ -10,8 +10,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.wagba.view.RecyclerViewInterface.DishRecyclerViewInterface;
 import com.example.wagba.databinding.ActivityDishesBinding;
-import com.example.wagba.model.Dish;
+import com.example.wagba.model.DishModel;
 import com.example.wagba.view.Adapter.DishAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Dishes extends AppCompatActivity implements DishRecyclerViewInterface {
+public class DishesActivity extends AppCompatActivity implements DishRecyclerViewInterface {
 
     private ActivityDishesBinding binding;
 //    FirebaseAuth auth;
@@ -31,7 +32,7 @@ public class Dishes extends AppCompatActivity implements DishRecyclerViewInterfa
     DatabaseReference myRef;
 
     DishAdapter dishAdapter;
-    ArrayList<Dish> dishArrayList;
+    ArrayList<DishModel> dishArrayList;
 
     private String num,name;
 
@@ -84,7 +85,7 @@ public class Dishes extends AppCompatActivity implements DishRecyclerViewInterfa
                 dishArrayList.clear();
                 for (DataSnapshot dishes: snapshot.child("restaurants/res"+num+"/dishes").getChildren()){
 
-                    Dish dish= new Dish(dishes.child("name").getValue().toString(),dishes.child("image").getValue().toString(),dishes.child("price").getValue(Integer.class),dishes.child("availability").getValue(Boolean.class));
+                    DishModel dish= new DishModel(dishes.child("name").getValue().toString(),dishes.child("image").getValue().toString(),dishes.child("price").getValue(Integer.class),dishes.child("availability").getValue(Boolean.class));
                     dishArrayList.add(dish);
 
                 }

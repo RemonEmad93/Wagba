@@ -1,6 +1,6 @@
 package com.example.wagba.model;
 
-public class CartItem {
+public class CartItemModel {
 
     private String name;
     private String image;
@@ -8,10 +8,10 @@ public class CartItem {
     private String count;
 
 
-    public CartItem() {
+    public CartItemModel() {
     }
 
-    public CartItem(String name, String image, int price, String count) {
+    public CartItemModel(String name, String image, int price, String count) {
         this.name = name;
         this.image = image;
         this.price = price;

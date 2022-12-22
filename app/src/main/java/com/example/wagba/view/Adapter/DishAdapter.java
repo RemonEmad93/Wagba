@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.wagba.DishRecyclerViewInterface;
+import com.example.wagba.view.RecyclerViewInterface.DishRecyclerViewInterface;
 import com.example.wagba.R;
-import com.example.wagba.model.Dish;
+import com.example.wagba.model.DishModel;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
 
 
    Context context;
-   ArrayList<Dish> dishArrayList;
+   ArrayList<DishModel> dishArrayList;
    private final DishRecyclerViewInterface dishRecyclerViewInterface;
 
    String num;
@@ -36,7 +36,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
 
 
 
-    public DishAdapter(Context context, ArrayList<Dish> dishArrayList,DishRecyclerViewInterface dishRecyclerViewInterface,String num) {
+    public DishAdapter(Context context, ArrayList<DishModel> dishArrayList, DishRecyclerViewInterface dishRecyclerViewInterface, String num) {
         sp=context.getSharedPreferences("orderss",0);
         this.num=num;
 
@@ -64,7 +64,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
 //        ed.clear();
 
 
-        Dish dish=dishArrayList.get(position);
+        DishModel dish=dishArrayList.get(position);
         Glide.with(holder.dishImage.getContext()).load(dish.getImage()).into(holder.dishImage);
         holder.dishName.setText(dish.getName());
         Log.d("helpppppp", dish.getName());

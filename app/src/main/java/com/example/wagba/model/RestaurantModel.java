@@ -3,7 +3,7 @@ package com.example.wagba.model;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class Restaurant {
+public class RestaurantModel {
 
 //    private String restaurantName;
 //    private int restaurantImage;
@@ -26,10 +26,10 @@ public class Restaurant {
     private String logo;
     private String num;
 
-    public Restaurant() {
+    public RestaurantModel() {
     }
 
-    public Restaurant(String name, String logo, String num) {
+    public RestaurantModel(String name, String logo, String num) {
         this.name = name;
         this.logo=logo;
         this.num=num;

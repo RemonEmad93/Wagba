@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.view;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.example.wagba;
+package com.example.wagba.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityCartBinding;
-import com.example.wagba.model.CartItem;
+import com.example.wagba.model.CartItemModel;
 import com.example.wagba.view.Adapter.CartAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class Cart extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity {
 
     private ActivityCartBinding binding;
 
@@ -33,7 +33,7 @@ public class Cart extends AppCompatActivity {
     DatabaseReference myRef;
 
     CartAdapter cartAdapter;
-    ArrayList<CartItem> cartArrayList;
+    ArrayList<CartItemModel> cartArrayList;
 
     int totalPrice=0;
 
@@ -175,7 +175,7 @@ public class Cart extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(binding.GateRadioGroup.getCheckedRadioButtonId()== -1){
-                    Toast.makeText(Cart.this, "Please choose gate", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Please choose gate", Toast.LENGTH_SHORT).show();
                 }else{
                     Log.d("abc",binding.radioButtonA.getText().toString());
                 }
@@ -204,7 +204,7 @@ public class Cart extends AppCompatActivity {
 //                    Log.d("testt1","here3333"+entry.getKey().substring(0, entry.getKey().length() - 1));
 
                     if(Objects.equals(items.child("name").getValue(String.class), entry.getKey().substring(0, entry.getKey().length() - String.valueOf(num).length()))){
-                        CartItem item= new CartItem(items.child("name").getValue().toString(),items.child("image").getValue().toString(),items.child("price").getValue(Integer.class),entry.getValue().toString());
+                        CartItemModel item= new CartItemModel(items.child("name").getValue().toString(),items.child("image").getValue().toString(),items.child("price").getValue(Integer.class),entry.getValue().toString());
                         cartArrayList.add(item);
                         totalPrice+=items.child("price").getValue(Integer.class);
                         counter++;

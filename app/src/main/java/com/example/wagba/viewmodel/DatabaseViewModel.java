@@ -6,8 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.wagba.database.ProfileDatabase;
-import com.example.wagba.model.DatabaseRepository;
+import com.example.wagba.model.Repository.DatabaseRepository;
 import com.example.wagba.model.DatabaseModel;
 
 import java.util.List;

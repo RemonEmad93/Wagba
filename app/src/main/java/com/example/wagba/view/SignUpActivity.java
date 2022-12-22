@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.wagba.ProfileActivity;
 import com.example.wagba.databinding.ActivitySignUpBinding;
 import com.example.wagba.model.DatabaseModel;
 import com.example.wagba.viewmodel.DatabaseViewModel;
@@ -20,12 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
     private SignUpViewModel signUpViewModel;
-//    private FirebaseAuth mAuth;
-//    FirebaseDatabase database;
-//    DatabaseReference myRef;
     Intent homeInt,loginInt;
-
-
     private DatabaseModel databaseModel;
     private DatabaseViewModel databaseViewModel;
 
@@ -37,8 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(view);
 
         homeInt = new Intent(this, MainActivity.class);  //go to mainActivity page
-        loginInt= new Intent(this, Login.class);         //go to login page
-
+        loginInt= new Intent(this, LoginActivity.class); //go to login page
 
         binding.include.cartImageView.setVisibility(View.INVISIBLE); //hide cart icon
         binding.include.menuImageView.setVisibility(View.GONE); //hide menu icon
@@ -51,17 +44,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onChanged(FirebaseUser firebaseUser) {
                 startActivity(homeInt);
                 finish();
-                Login.LA.finish();
+                LoginActivity.LA.finish();
                 return;
             }
         });
-//        database = FirebaseDatabase.getInstance();
-//        myRef = database.getReference("users");
-//        mAuth = FirebaseAuth.getInstance();
-//        if(mAuth.getCurrentUser() != null){
-//            finish();
-//            return;
-//        }
 
         //if user returns to login page then destroy the sign up and the opened login activity
         binding.loginPageButton.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(loginInt);
                 finish();
-                Login.LA.finish();
+                LoginActivity.LA.finish();
                 return;
             }
         });
@@ -84,17 +70,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
     private void registerUser(){
         String username= binding.signUpUsername.getText().toString();
         String email= binding.signUpEmail.getText().toString();
         String password= binding.signUpPassword.getText().toString();
         String phone_number=binding.editTextPhone.getText().toString();
-
-        //insert user data into room database
-        databaseModel= new DatabaseModel(username,email,phone_number);
-        databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
-        databaseViewModel.insertProfile(databaseModel);
 
         //check that user entered all data
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || phone_number.isEmpty()){
@@ -102,31 +82,12 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+        //insert user data into room database
+        databaseModel= new DatabaseModel(username,email,phone_number);
+        databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
+        databaseViewModel.insertProfile(databaseModel);
 
-
-        //pass the entered data to viewModel
+        //pass the entered data to viewModel to insert data in firebase database
         signUpViewModel.signUp(username, email, password, phone_number);
-
-        /*mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            User user= new User(username,email,password);
-                            myRef.child(mAuth.getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            startActivity(homeInt);
-                                            finish();
-                                            Login.LA.finish();
-                                            return;
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(SignUp.this, "Registration failed, try again", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
     }
 }

@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.wagba.R;
-import com.example.wagba.model.CartItem;
+import com.example.wagba.model.CartItemModel;
 
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     Context context;
-    ArrayList<CartItem> itemArrayList;
+    ArrayList<CartItemModel> itemArrayList;
 
 
-    public CartAdapter(Context context, ArrayList<CartItem> itemArrayList) {
+    public CartAdapter(Context context, ArrayList<CartItemModel> itemArrayList) {
         this.context = context;
         this.itemArrayList = itemArrayList;
     }
@@ -38,7 +38,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
 
-        CartItem item=itemArrayList.get(position);
+        CartItemModel item=itemArrayList.get(position);
         Glide.with(holder.cartItemImage.getContext()).load(item.getImage()).into(holder.cartItemImage);
         holder.cartItemName.setText(item.getName());
         holder.cartItemPrice.setText(String.valueOf(item.getPrice())+"EGP");

@@ -14,7 +14,7 @@ import com.example.wagba.databinding.ActivityLoginBinding;
 import com.example.wagba.viewmodel.LoginViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private LoginViewModel loginViewModel;

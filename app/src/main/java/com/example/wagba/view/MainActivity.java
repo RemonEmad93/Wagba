@@ -14,14 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import com.example.wagba.Cart;
-import com.example.wagba.Dishes;
-import com.example.wagba.ProfileActivity;
 import com.example.wagba.R;
-import com.example.wagba.RestaurantRecyclerViewInterface;
-import com.example.wagba.model.Restaurant;
-import com.example.wagba.view.Adapter.RestaurantAdapter;
 import com.example.wagba.databinding.ActivityMainBinding;
+import com.example.wagba.view.RecyclerViewInterface.RestaurantRecyclerViewInterface;
+import com.example.wagba.model.RestaurantModel;
+import com.example.wagba.view.Adapter.RestaurantAdapter;
 import com.example.wagba.viewmodel.LogOutViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 
 //    RecyclerView recyclerView;
     RestaurantAdapter restaurantAdapter;
-    ArrayList<Restaurant> restaurantList;
+    ArrayList<RestaurantModel> restaurantList;
 
     SharedPreferences sp;
     SharedPreferences.Editor ed;
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         View view = binding.getRoot();
         setContentView(view);
 
-        cartInt= new Intent(this, Cart.class);
+        cartInt= new Intent(this, CartActivity.class);
         profileInt= new Intent(this, ProfileActivity.class);
 
         binding.include.menuImageView.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
                 restaurantList.clear();
                 for (DataSnapshot restaurants: snapshot.child("restaurants").getChildren()){
 
-                    Restaurant restaurant= new Restaurant(restaurants.child("name").getValue(String.class),restaurants.child("logo").getValue().toString(),restaurants.child("num").getValue(String.class));
+                    RestaurantModel restaurant= new RestaurantModel(restaurants.child("name").getValue(String.class),restaurants.child("logo").getValue().toString(),restaurants.child("num").getValue(String.class));
                     restaurantList.add(restaurant);
 
 //                    Restaurant restaurant= dataSnapshot.getValue(Restaurant.class);
@@ -194,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     }
 
     private void startLoginActivity(){
-        loginInt=new Intent(this, Login.class);
+        loginInt=new Intent(this, LoginActivity.class);
         startActivity(loginInt);
         finish();
         return;
@@ -207,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     @Override
     public void onRestaurantClick(int position) {
 
-        dishInt= new Intent(this, Dishes.class);
+        dishInt= new Intent(this, DishesActivity.class);
         dishInt.putExtra("place",restaurantList.get(position).getNum().toString());
         dishInt.putExtra("name",restaurantList.get(position).getRestaurantName().toString());
         Log.d("thePlace",restaurantList.get(position).getNum().toString());

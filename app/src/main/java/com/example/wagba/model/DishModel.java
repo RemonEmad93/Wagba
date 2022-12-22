@@ -1,15 +1,15 @@
 package com.example.wagba.model;
 
-public class Dish {
+public class DishModel {
     private Boolean availability;
     private String name;
     private String image;
     private int price;
 
-    public Dish() {
+    public DishModel() {
     }
 
-    public Dish( String name, String image, int price, Boolean availability) {
+    public DishModel(String name, String image, int price, Boolean availability) {
         this.availability = availability;
         this.name = name;
         this.image = image;

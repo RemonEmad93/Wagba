@@ -1,4 +1,4 @@
-package com.example.wagba.model;
+package com.example.wagba.model.Repository;
 
 
 import android.app.Application;
@@ -7,10 +7,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.wagba.ProfileActivity;
-import com.example.wagba.viewmodel.DatabaseViewModel;
+import com.example.wagba.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -65,7 +63,7 @@ public class SignInUpRepository {
 
                             // add user data to firebase DB
                             Log.d("car",phone_number);
-                            User user= new User(username,email,password,phone_number);
+                            UserModel user= new UserModel(username,email,password,phone_number);
                             myRef.child(mAuth.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

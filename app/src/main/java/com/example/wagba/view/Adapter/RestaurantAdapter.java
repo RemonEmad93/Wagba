@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.wagba.R;
-import com.example.wagba.RestaurantRecyclerViewInterface;
-import com.example.wagba.model.Restaurant;
+import com.example.wagba.view.RecyclerViewInterface.RestaurantRecyclerViewInterface;
+import com.example.wagba.model.RestaurantModel;
 
 import java.util.ArrayList;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
 
     Context context;
-    ArrayList<Restaurant> restaurantArrayList;
+    ArrayList<RestaurantModel> restaurantArrayList;
     private final RestaurantRecyclerViewInterface restaurantRecyclerViewInterface;
 
-    public RestaurantAdapter(Context context, ArrayList<Restaurant> restaurantArrayList,RestaurantRecyclerViewInterface restaurantRecyclerViewInterface) {
+    public RestaurantAdapter(Context context, ArrayList<RestaurantModel> restaurantArrayList, RestaurantRecyclerViewInterface restaurantRecyclerViewInterface) {
         this.context = context;
         this.restaurantArrayList = restaurantArrayList;
         this.restaurantRecyclerViewInterface=restaurantRecyclerViewInterface;
@@ -42,7 +42,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant restaurant=restaurantArrayList.get(position);
+        RestaurantModel restaurant=restaurantArrayList.get(position);
         holder.resName.setText(restaurant.getRestaurantName());
         Glide.with(holder.resImage.getContext()).load(restaurant.getLogo()).into(holder.resImage);
 //        holder.resImage.setImageResource(restaurant.getRestaurantImage());
