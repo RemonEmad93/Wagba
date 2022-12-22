@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -34,22 +32,16 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 
     private ActivityMainBinding binding;
     private LogOutViewModel logOutViewModel;
+
+    Intent loginInt, dishInt, cartInt, profileInt, ordersInt;
+
     FirebaseAuth auth;
     FirebaseUser currentUser;
     FirebaseDatabase database;
-    Intent loginInt, dishInt, cartInt, profileInt, ordersInt;
     DatabaseReference myRef;
 
-//    RecyclerView recyclerView;
     RestaurantAdapter restaurantAdapter;
     ArrayList<RestaurantModel> restaurantList;
-
-    SharedPreferences sp;
-    SharedPreferences.Editor ed;
-
-
-
-//    TextView b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +50,45 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         View view = binding.getRoot();
         setContentView(view);
 
-        cartInt= new Intent(this, CartActivity.class);
-        profileInt= new Intent(this, ProfileActivity.class);
+        cartInt= new Intent(this, CartActivity.class); //go to cart page
+        profileInt= new Intent(this, ProfileActivity.class); //go to profile page
+
+        auth= FirebaseAuth.getInstance();
+        currentUser = auth.getCurrentUser();
+        if(currentUser == null){
+            startLoginActivity();
+            return;
+        }
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+
+//        sp=getSharedPreferences("orderss",0);
+//        ed=sp.edit();
+//        ed.clear();
+//        ed.commit();
+
+        binding.RestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.RestaurantRecyclerView.setHasFixedSize(true);
+        restaurantList= new ArrayList<>();
+        restaurantAdapter= new RestaurantAdapter(this, restaurantList, this);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                restaurantList.clear();
+                for (DataSnapshot restaurants: snapshot.child("restaurants").getChildren()){
+                    RestaurantModel restaurant= new RestaurantModel(restaurants.child("name").getValue(String.class),restaurants.child("logo").getValue().toString(),restaurants.child("num").getValue(String.class));
+                    restaurantList.add(restaurant);
+                }
+                binding.RestaurantRecyclerView.setAdapter(restaurantAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         binding.include.menuImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,15 +97,12 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
             }
         });
 
-
         binding.include.cartImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(cartInt);
-
             }
         });
-
 
         logOutViewModel= new ViewModelProvider(this).get(LogOutViewModel.class);
         logOutViewModel.getLoggedOutMutualLiveData().observe(this, new Observer<Boolean>() {
@@ -87,94 +113,16 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
             }
         });
 
-        auth= FirebaseAuth.getInstance();
-        currentUser = auth.getCurrentUser();
-        if(currentUser == null){
-            startLoginActivity();
-            return;
-        }
-
-//        sp=getSharedPreferences("orderss",0);
-//        ed=sp.edit();
-//        ed.clear();
-//        ed.commit();
-
-
-//        ed.clear();
-//        ed.putString("chicken","1");
-//        ed.commit();
-
-//        Log.d("helpppppp",sp.getString("chicken","null"));
-
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-
-//        myRef.setValue("database connected");
-
-
-        binding.RestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.RestaurantRecyclerView.setHasFixedSize(true);
-
-
-
-
-        restaurantList= new ArrayList<>();
-//        restaurantList.add(new Restaurant("test1",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test2",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test3",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test4",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test5",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test6",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test7",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test8",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test9",R.drawable.logo));
-//        restaurantList.add(new Restaurant("test10",R.drawable.logo));
-
-        restaurantAdapter= new RestaurantAdapter(this, restaurantList, this);
-//        binding.RestaurantRecyclerView.setAdapter(restaurantAdapter);
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                restaurantList.clear();
-                for (DataSnapshot restaurants: snapshot.child("restaurants").getChildren()){
-
-                    RestaurantModel restaurant= new RestaurantModel(restaurants.child("name").getValue(String.class),restaurants.child("logo").getValue().toString(),restaurants.child("num").getValue(String.class));
-                    restaurantList.add(restaurant);
-
-//                    Restaurant restaurant= dataSnapshot.getValue(Restaurant.class);
-//                    restaurantList.add(restaurant);
-                }
-//                binding.RestaurantRecyclerView.setAdapter(new RestaurantAdapter(MainActivity.this,restaurantList,restaurantRecyclerViewInterface.this));
-                binding.RestaurantRecyclerView.setAdapter(restaurantAdapter);
-//                restaurantAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-//        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                logout();
-//            }
-//        });
-
     }
 
     private void ShowMenu(View view){
         PopupMenu popupMenu=new PopupMenu(this,view);
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 if(item.getTitle().toString().equals("Profile")){
-                    Log.d("this","herererert43534543");
                     startActivity(profileInt);
                 }
                 if(item.getTitle()=="Orders"){
@@ -203,12 +151,9 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 
     @Override
     public void onRestaurantClick(int position) {
-
         dishInt= new Intent(this, DishesActivity.class);
         dishInt.putExtra("place",restaurantList.get(position).getNum().toString());
         dishInt.putExtra("name",restaurantList.get(position).getRestaurantName().toString());
-        Log.d("thePlace",restaurantList.get(position).getNum().toString());
         startActivity(dishInt);
-
     }
 }

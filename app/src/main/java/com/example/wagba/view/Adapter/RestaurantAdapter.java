@@ -1,7 +1,6 @@
 package com.example.wagba.view.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +33,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view= LayoutInflater.from(context).inflate(R.layout.restaurant_item,parent,false);
-
         return new RestaurantViewHolder(view, restaurantRecyclerViewInterface);
     }
 
@@ -45,7 +42,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         RestaurantModel restaurant=restaurantArrayList.get(position);
         holder.resName.setText(restaurant.getRestaurantName());
         Glide.with(holder.resImage.getContext()).load(restaurant.getLogo()).into(holder.resImage);
-//        holder.resImage.setImageResource(restaurant.getRestaurantImage());
     }
 
     @Override
@@ -70,7 +66,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                     if(restaurantRecyclerViewInterface != null){
 
                         int pos=getAbsoluteAdapterPosition();
-                        Log.d("viewPos",String.valueOf(pos));
 
                         if(pos != RecyclerView.NO_POSITION){
                             restaurantRecyclerViewInterface.onRestaurantClick(pos);
