@@ -15,6 +15,9 @@
     <string name="gate">Gate</string>
     <string name="gate_A">A</string>
     <string name="gate_B">B</string>
+    <string name="time">Time</string>
+    <string name="time_12">12 PM</string>
+    <string name="time_3">3 PM</string>
     <string name="confirm">Confirm</string>
     <string name="profile">Profile</string>
     <string name="orders">Orders</string>

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.PopupMenu;
 
 import com.example.wagba.R;
 import com.example.wagba.databinding.ActivityMainBinding;
+import com.example.wagba.view.Adapter.OrderHistoryAdapter;
 import com.example.wagba.view.RecyclerViewInterface.RestaurantRecyclerViewInterface;
 import com.example.wagba.model.RestaurantModel;
 import com.example.wagba.view.Adapter.RestaurantAdapter;
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     RestaurantAdapter restaurantAdapter;
     ArrayList<RestaurantModel> restaurantList;
 
+//    SharedPreferences sp;
+//    SharedPreferences.Editor ed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 
         cartInt= new Intent(this, CartActivity.class); //go to cart page
         profileInt= new Intent(this, ProfileActivity.class); //go to profile page
+        ordersInt=new Intent(this, OrderHistoryActivity.class); //go to orders history page
 
         auth= FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
@@ -125,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
                 if(item.getTitle().toString().equals("Profile")){
                     startActivity(profileInt);
                 }
-                if(item.getTitle()=="Orders"){
-
+                if(item.getTitle().toString().equals("Orders")){
+                    startActivity(ordersInt);
                 }
                 if(item.getTitle().toString().equals("Logout")){
                     logout();

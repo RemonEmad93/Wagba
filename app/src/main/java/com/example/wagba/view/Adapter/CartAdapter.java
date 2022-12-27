@@ -22,6 +22,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     ArrayList<CartItemModel> itemArrayList;
 
 
+    public CartAdapter(ArrayList<CartItemModel> itemArrayList) {
+        this.itemArrayList = itemArrayList;
+    }
+
     public CartAdapter(Context context, ArrayList<CartItemModel> itemArrayList) {
         this.context = context;
         this.itemArrayList = itemArrayList;
@@ -30,7 +34,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.cart_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item,parent,false);
 
         return new CartViewHolder(view);
     }

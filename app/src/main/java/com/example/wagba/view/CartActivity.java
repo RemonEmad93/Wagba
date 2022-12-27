@@ -4,22 +4,32 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.wagba.databinding.ActivityCartBinding;
 import com.example.wagba.model.CartItemModel;
+import com.example.wagba.model.OrderModel;
+import com.example.wagba.model.UserModel;
 import com.example.wagba.view.Adapter.CartAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,6 +38,7 @@ public class CartActivity extends AppCompatActivity {
     private ActivityCartBinding binding;
 
     SharedPreferences sp;
+    SharedPreferences.Editor ed;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -35,9 +46,13 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
     ArrayList<CartItemModel> cartArrayList;
 
+    Intent orderInt;
+
     int totalPrice=0;
 
     int counter = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +62,9 @@ public class CartActivity extends AppCompatActivity {
         setContentView(view);
 
 
-        sp = getSharedPreferences("orderss", 0);
+        orderInt= new Intent(this,OrderHistoryActivity.class);
 
+        sp = getSharedPreferences("orderss", 0);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
@@ -63,18 +79,21 @@ public class CartActivity extends AppCompatActivity {
         cartAdapter = new CartAdapter(this, cartArrayList);
 
 
-        Map<String, ?> allEntries = sp.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+        if(sp.getAll().isEmpty()){
+            binding.cartLinearLayout.setVisibility(View.GONE);
+        }else{
+            Map<String, ?> allEntries = sp.getAll();
+            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
 
 //            if(myRef.child("restaurants/res10/dishes/name"). == entry.getKey()){
 //
 //            }
 
-            if(entry.getKey().toString().substring(entry.getKey().toString().length() - 1).equals("0")){
-                pleasework(entry, 10);
-            }else{
-                pleasework(entry, Integer.parseInt(entry.getKey().substring(entry.getKey().length() - 1)));
-            }
+                if(entry.getKey().toString().substring(entry.getKey().toString().length() - 1).equals("0")){
+                    pleasework(entry, 10);
+                }else{
+                    pleasework(entry, Integer.parseInt(entry.getKey().substring(entry.getKey().length() - 1)));
+                }
 
 
 //            counter++;
@@ -167,19 +186,63 @@ public class CartActivity extends AppCompatActivity {
 
 
 //            Log.d("map_values", "fgdgdfg"+entry.getKey() + ": " + entry.getValue().toString());
+            }
         }
+
 
 
         binding.confirmOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(binding.GateRadioGroup.getCheckedRadioButtonId()== -1){
-                    Toast.makeText(CartActivity.this, "Please choose gate", Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.d("abc",binding.radioButtonA.getText().toString());
-                }
+                if(binding.GateRadioGroup.getCheckedRadioButtonId()== -1 || binding.TimeRadioGroup.getCheckedRadioButtonId()== -1){
+                    Toast.makeText(CartActivity.this, "Please choose gate & Time", Toast.LENGTH_SHORT).show();
+                } else{
+                    RadioButton gateRadioButton=findViewById(binding.GateRadioGroup.getCheckedRadioButtonId());
+                    RadioButton timeRadioButton=findViewById(binding.TimeRadioGroup.getCheckedRadioButtonId());
 
+                    Log.d("one",cartArrayList.toString());
+                    myRef = database.getReference("orders");
+                    // add user data to firebase DB
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    Date date = new Date();
+                    String currentTime=formatter.format(date);
+                    OrderModel order=new OrderModel(String.valueOf(totalPrice),timeRadioButton.getText().toString(),gateRadioButton.getText().toString(),"processing");
+                    myRef.child(currentTime)
+                            .setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    //pass current user id to viewModel
+//                                    int i=0;
+//                                    for(i=0;i<cartArrayList.size();i++){
+                                    ArrayList<CartItemModel> tmp;
+
+                                    if (cartArrayList.size() > cartArrayList.size() / 2 + 1) {
+                                        cartArrayList.subList(cartArrayList.size() / 2 , cartArrayList.size()).clear();
+                                    }
+                                    Log.d("threeee",cartArrayList.toString()+ cartArrayList.size());
+                                        myRef.child(currentTime).child("dishes")
+                                                .setValue(cartArrayList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        //go to order activity
+                                                        ed=sp.edit();
+                                                        ed.clear();
+                                                        ed.commit();
+                                                        startActivity(orderInt);
+                                                        finish();
+                                                        return;
+                                                        //clear sharedPreferences
+                                                        //destroy cart activity
+
+                                                    }
+                                                });
+//                                    }
+                                    Toast.makeText(CartActivity.this, "order confirmed", Toast.LENGTH_SHORT).show();
+                                }
+
+                            });
+                }
             }
         });
 
@@ -206,6 +269,8 @@ public class CartActivity extends AppCompatActivity {
                     if(Objects.equals(items.child("name").getValue(String.class), entry.getKey().substring(0, entry.getKey().length() - String.valueOf(num).length()))){
                         CartItemModel item= new CartItemModel(items.child("name").getValue().toString(),items.child("image").getValue().toString(),items.child("price").getValue(Integer.class),entry.getValue().toString());
                         cartArrayList.add(item);
+
+//                        Log.d("one","rfsfdf"+cartArrayList.get(0).getPrice());
                         totalPrice+=items.child("price").getValue(Integer.class);
                         counter++;
                         Log.d("plz","here4");
@@ -216,6 +281,11 @@ public class CartActivity extends AppCompatActivity {
                             Log.d("plz","here5");
                             Log.d("testt1",cartArrayList.toString());
                             binding.totalPriceTextView.setText("total: "+totalPrice+" EGP");
+                            Log.d("ct","hrerere"+cartArrayList.toString());
+//                            if (cartArrayList.isEmpty()){
+//
+//                                binding.cartLinearLayout.setVisibility(View.GONE);
+//                            }
                             binding.cartRecyclerView.setAdapter(cartAdapter);
                         }
                     }
