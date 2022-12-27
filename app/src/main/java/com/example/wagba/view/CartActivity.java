@@ -27,8 +27,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -46,6 +48,8 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
     ArrayList<CartItemModel> cartArrayList;
 
+    String currentTime;
+
     Intent orderInt;
 
     int totalPrice=0;
@@ -60,6 +64,7 @@ public class CartActivity extends AppCompatActivity {
         binding = ActivityCartBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
 
 
         orderInt= new Intent(this,OrderHistoryActivity.class);
@@ -189,11 +194,62 @@ public class CartActivity extends AppCompatActivity {
             }
         }
 
+        SimpleDateFormat formatterT = new SimpleDateFormat("HH:mm:ss");
+        Date dateT = new Date();
+        currentTime=formatterT.format(dateT);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        String currentDateTime=formatter.format(date);
+
+        if(currentTime.compareTo("13:00:00") > 0){
+            //creating calender instance
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            calendar.add(Calendar.DATE, 1);
+
+            // getting the new date from calendar
+            Date addedDate = calendar.getTime();
+
+            // printing the new date
+            currentTime = formatterT.format(addedDate);
+
+            Toast.makeText(CartActivity.this, "order for tomorrow", Toast.LENGTH_SHORT).show();
+        }
+
+        if(currentTime.compareTo("10:00:00") > 0 && currentTime.compareTo("13:00:00") <0){
+            binding.radioButton12.setEnabled(false);
+        }
+
+
 
 
         binding.confirmOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
+                // printing the date in the readable format.
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//                String dateStr = dateFormat.format(date);
+//                System.out.println("Current date : "+dateStr);
+
+//                //creating calender instance
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(date);
+//
+//                calendar.add(Calendar.DATE, 1);
+//
+//                // getting the new date from calendar
+//                Date addedDate = calendar.getTime();
+//
+//                // printing the new date
+//                currentTime = formatterT.format(addedDate);
+//                System.out.println("New date after adding 2 years : "+newDateinStr);
+
+
 
                 if(binding.GateRadioGroup.getCheckedRadioButtonId()== -1 || binding.TimeRadioGroup.getCheckedRadioButtonId()== -1){
                     Toast.makeText(CartActivity.this, "Please choose gate & Time", Toast.LENGTH_SHORT).show();
@@ -201,14 +257,14 @@ public class CartActivity extends AppCompatActivity {
                     RadioButton gateRadioButton=findViewById(binding.GateRadioGroup.getCheckedRadioButtonId());
                     RadioButton timeRadioButton=findViewById(binding.TimeRadioGroup.getCheckedRadioButtonId());
 
+
+
                     Log.d("one",cartArrayList.toString());
                     myRef = database.getReference("orders");
                     // add user data to firebase DB
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    Date date = new Date();
-                    String currentTime=formatter.format(date);
+
                     OrderModel order=new OrderModel(String.valueOf(totalPrice),timeRadioButton.getText().toString(),gateRadioButton.getText().toString(),"processing");
-                    myRef.child(currentTime)
+                    myRef.child(currentDateTime)
                             .setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -221,11 +277,12 @@ public class CartActivity extends AppCompatActivity {
                                         cartArrayList.subList(cartArrayList.size() / 2 , cartArrayList.size()).clear();
                                     }
                                     Log.d("threeee",cartArrayList.toString()+ cartArrayList.size());
-                                        myRef.child(currentTime).child("dishes")
+                                        myRef.child(currentDateTime).child("dishes")
                                                 .setValue(cartArrayList).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         //go to order activity
+                                                        Toast.makeText(CartActivity.this, "order confirmed", Toast.LENGTH_SHORT).show();
                                                         ed=sp.edit();
                                                         ed.clear();
                                                         ed.commit();
@@ -238,7 +295,7 @@ public class CartActivity extends AppCompatActivity {
                                                     }
                                                 });
 //                                    }
-                                    Toast.makeText(CartActivity.this, "order confirmed", Toast.LENGTH_SHORT).show();
+
                                 }
 
                             });
