@@ -72,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         loginViewModel.login(email,password);
+
+//        SignUpActivity.userEmail=email;
     }
 
 }

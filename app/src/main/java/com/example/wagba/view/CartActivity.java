@@ -263,7 +263,8 @@ public class CartActivity extends AppCompatActivity {
                     myRef = database.getReference("orders");
                     // add user data to firebase DB
 
-                    OrderModel order=new OrderModel(String.valueOf(totalPrice),timeRadioButton.getText().toString(),gateRadioButton.getText().toString(),"processing");
+                    Log.d("plxwork",MainActivity.currentUserEmail);
+                    OrderModel order=new OrderModel(String.valueOf(totalPrice),timeRadioButton.getText().toString(),gateRadioButton.getText().toString(),"processing",MainActivity.currentUserEmail);
                     myRef.child(currentDateTime)
                             .setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

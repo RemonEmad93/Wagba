@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
 //    SharedPreferences sp;
 //    SharedPreferences.Editor ed;
 
+    public static String currentUserEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
             startLoginActivity();
             return;
         }
+
+        currentUserEmail=auth.getCurrentUser().getEmail();
+//        Log.d("plzdata",auth.getCurrentUser().getEmail());
+
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();

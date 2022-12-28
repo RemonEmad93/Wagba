@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     Intent homeInt,loginInt;
     private DatabaseModel databaseModel;
     private DatabaseViewModel databaseViewModel;
-    private String uid;
+//    public static String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,6 @@ public class SignUpActivity extends AppCompatActivity {
         signUpViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
-                uid=firebaseUser.getUid();
                 startActivity(homeInt);
                 finish();
                 LoginActivity.LA.finish();
@@ -91,5 +92,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         //pass the entered data to viewModel to insert data in firebase database
         signUpViewModel.signUp(username, email, password, phone_number);
+
+//        userEmail=email;
+//        Log.d("plzdata",userEmail);
     }
 }

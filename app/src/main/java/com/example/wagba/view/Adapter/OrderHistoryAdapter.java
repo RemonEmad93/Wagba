@@ -2,6 +2,7 @@ package com.example.wagba.view.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,13 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     Activity activity;
 
-    ArrayList<CartItemModel> itemArrayList;
+//    ArrayList<CartItemModel> itemArrayList;
     ArrayList<OrderHistoryModel> orderHistoryModel;
 
-    public OrderHistoryAdapter(Activity activity,ArrayList<OrderHistoryModel> orderHistoryModel,ArrayList<CartItemModel> itemArrayList ){
+    public OrderHistoryAdapter(Activity activity,ArrayList<OrderHistoryModel> orderHistoryModel ){
         this.activity=activity;
         this.orderHistoryModel=orderHistoryModel;
-        this.itemArrayList=itemArrayList;
+//        this.itemArrayList=itemArrayList;
     }
 
 
@@ -49,10 +50,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.orderDate.setText(item.getTime());
         holder.orderStatus.setText(item.getStates());
 
-        CartAdapter cartAdapter= new CartAdapter(itemArrayList);
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(activity);
-        holder.orderItems.setLayoutManager(linearLayoutManager);
-        holder.orderItems.setAdapter(cartAdapter);
+//        Log.d("helpme",item.cartItemModelArrayList.toString());
+//        CartAdapter cartAdapter= new CartAdapter(item.cartItemModelArrayList());
+//        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(activity);
+//        holder.orderItems.setLayoutManager(linearLayoutManager);
+//        holder.orderItems.setAdapter(cartAdapter);
+//        cartAdapter.notifyDataSetChanged();
 
     }
 
@@ -66,14 +69,14 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
         TextView orderDate;
         TextView orderStatus;
-        RecyclerView orderItems;
+//        RecyclerView orderItems;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             orderDate= itemView.findViewById(R.id.orderDateTextView);
             orderStatus= itemView.findViewById(R.id.orderStatusTextView);
-            orderItems= itemView.findViewById(R.id.orderRecyclerView);
+//            orderItems= itemView.findViewById(R.id.orderRecyclerView);
 
         }
     }

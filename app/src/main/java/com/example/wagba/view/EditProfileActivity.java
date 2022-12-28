@@ -3,6 +3,7 @@ package com.example.wagba.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +14,15 @@ import com.example.wagba.databinding.ActivityProfileBinding;
 import com.example.wagba.model.DatabaseModel;
 import com.example.wagba.viewmodel.DatabaseViewModel;
 
+import java.util.Objects;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     private ActivityEditProfileBinding binding;
     private DatabaseViewModel databaseViewModel;
     private DatabaseModel databaseModelObject;
+
+    Intent profileInt;
 
 
     @Override
@@ -28,13 +33,17 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(view);
 
 
+        profileInt= new Intent(this, ProfileActivity.class);
+
         databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
         databaseViewModel.getAllData().observe(this, data ->{
             for(DatabaseModel databaseModel: data){
-                binding.ProfileNameEditText.setText(databaseModel.getName());
-                binding.ProfileEmailEditText.setText(databaseModel.getEmail());
-                binding.ProfilePhoneNumberEditText.setText(databaseModel.getPhone_number());
-                databaseModelObject=databaseModel;
+                if(Objects.equals(MainActivity.currentUserEmail, databaseModel.getEmail())){
+                    binding.ProfileNameEditText.setText(databaseModel.getName());
+                    binding.ProfileEmailEditText.setText(databaseModel.getEmail());
+                    binding.ProfilePhoneNumberEditText.setText(databaseModel.getPhone_number());
+                    databaseModelObject=databaseModel;
+                }
             }
         }  );
 
@@ -52,8 +61,8 @@ public class EditProfileActivity extends AppCompatActivity {
 //                databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
                 databaseViewModel.updateProfile(databaseModelObject);
 
-//                startActivity(editInt);
-//                finish();
+                startActivity(profileInt);
+                finish();
             }
         });
     }
