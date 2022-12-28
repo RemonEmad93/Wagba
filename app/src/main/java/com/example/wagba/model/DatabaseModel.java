@@ -13,7 +13,6 @@ public class DatabaseModel {
     @ColumnInfo(name = "uid")
     private int uid;
 
-//    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "name")
     private String name;

@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     RestaurantAdapter restaurantAdapter;
     ArrayList<RestaurantModel> restaurantList;
 
-//    SharedPreferences sp;
-//    SharedPreferences.Editor ed;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
 
     public static String currentUserEmail;
 
@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
-//        sp=getSharedPreferences("orderss",0);
-//        ed=sp.edit();
-//        ed.clear();
-//        ed.commit();
 
         binding.RestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.RestaurantRecyclerView.setHasFixedSize(true);
@@ -158,6 +154,11 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
     }
 
     private void logout(){
+        //delete sp when logout
+        sp=getSharedPreferences("orderss",0);
+        ed=sp.edit();
+        ed.clear();
+        ed.commit();
         logOutViewModel.logOut();
     }
 
