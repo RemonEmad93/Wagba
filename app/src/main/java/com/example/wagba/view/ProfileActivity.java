@@ -3,6 +3,7 @@ package com.example.wagba.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,6 +15,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
     private DatabaseViewModel databaseViewModel;
+    private Intent editInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class ProfileActivity extends AppCompatActivity {
         binding= ActivityProfileBinding.inflate(getLayoutInflater());
         View view= binding.getRoot();
         setContentView(view);
+
+        editInt= new Intent(this, EditProfileActivity.class);
 
         databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
         databaseViewModel.getAllData().observe(this, data ->{
@@ -30,5 +34,13 @@ public class ProfileActivity extends AppCompatActivity {
                 binding.ProfilePhoneNumberTextView.setText(databaseModel.getPhone_number());
             }
         }  );
+
+        binding.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(editInt);
+                finish();
+            }
+        });
     }
 }

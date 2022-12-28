@@ -22,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
     Intent homeInt,loginInt;
     private DatabaseModel databaseModel;
     private DatabaseViewModel databaseViewModel;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         signUpViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
+                uid=firebaseUser.getUid();
                 startActivity(homeInt);
                 finish();
                 LoginActivity.LA.finish();

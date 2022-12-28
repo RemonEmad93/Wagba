@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProfileActivity">
+    tools:context=".view.EditProfileActivity">
+
 
     <include
         android:id="@+id/include"
@@ -37,10 +38,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileNameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/ProfileNameEditText" />
 
-    <TextView
-        android:id="@+id/ProfileEmailTextView"
+    <EditText
+        android:id="@+id/ProfileEmailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -52,8 +53,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileEmailLabelTextView" />
 
-    <TextView
-        android:id="@+id/ProfilePhoneNumberTextView"
+    <EditText
+        android:id="@+id/ProfilePhoneNumberEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -76,10 +77,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileEmailTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/ProfileEmailEditText" />
 
-    <TextView
-        android:id="@+id/ProfileNameTextView"
+    <EditText
+        android:id="@+id/ProfileNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="21dp"
@@ -92,11 +93,11 @@
         app:layout_constraintTop_toBottomOf="@+id/ProfileNameLabelTextView" />
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
-        android:text="@string/edit"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

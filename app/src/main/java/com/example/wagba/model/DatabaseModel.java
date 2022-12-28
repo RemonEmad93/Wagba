@@ -8,7 +8,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "profileData")
 public class DatabaseModel {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "uid")
+    private int uid;
+
+//    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "name")
     private String name;
@@ -21,11 +26,30 @@ public class DatabaseModel {
     @ColumnInfo(name = "phone_number")
     private String phone_number;
 
+//    public DatabaseModel(){
+//
+//    }
+//
+//    public DatabaseModel(@NonNull String uid, @NonNull String name, @NonNull String email, @NonNull String phone_number) {
+//        this.uid = uid;
+//        this.name = name;
+//        this.email = email;
+//        this.phone_number = phone_number;
+//    }
 
     public DatabaseModel(@NonNull String name, @NonNull String email, @NonNull String phone_number) {
         this.name = name;
         this.email = email;
         this.phone_number = phone_number;
+    }
+
+    @NonNull
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(@NonNull int uid) {
+        this.uid = uid;
     }
 
     @NonNull

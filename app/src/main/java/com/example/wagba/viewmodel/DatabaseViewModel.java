@@ -29,4 +29,8 @@ public class DatabaseViewModel extends AndroidViewModel {
     public LiveData<List<DatabaseModel>> getAllData(){
         return data;
     }
+
+    public void updateProfile(DatabaseModel databaseModel){
+        databaseRepository.updateProfile(databaseModel);
+    }
 }

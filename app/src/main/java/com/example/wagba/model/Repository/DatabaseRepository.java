@@ -44,4 +44,22 @@ public class DatabaseRepository {
         return profileDao.getAllData();
     }
 
+    public void updateProfile(DatabaseModel databaseModel){
+        new updateProfile(profileDao).execute(databaseModel);
+    }
+
+    private static class updateProfile extends AsyncTask<DatabaseModel,Void,Void>{
+        private ProfileDao proDao;
+
+        updateProfile(ProfileDao proDao){
+            this.proDao=proDao;
+        }
+
+        @Override
+        protected Void doInBackground(DatabaseModel... databaseModels) {
+            proDao.updateProfile(databaseModels[0]);
+            return null;
+        }
+    }
+
 }
