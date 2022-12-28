@@ -31,7 +31,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     OrderHistoryAdapter orderHistoryAdapter;
     ArrayList<OrderHistoryModel> orderHistoryArrayList;
-//    ArrayList<CartItemModel> cartArrayList;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -50,8 +49,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
         binding.ordersRecyclerView.setHasFixedSize(true);
 
         orderHistoryArrayList = new ArrayList<>();
-//        cartArrayList = new ArrayList<>();
-
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -60,18 +57,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 orderHistoryArrayList.clear();
                 for (DataSnapshot orders: snapshot.child("orders").getChildren()){
                     if(Objects.equals(MainActivity.currentUserEmail, orders.child("userEmail").getValue().toString())){
-//                        cartArrayList.clear();
-//                        Log.d("helpme",orders.getKey().toString()+cartArrayList);
-//                        for (DataSnapshot items: snapshot.child("orders/"+orders.getKey().toString() +"/dishes").getChildren()){
-//                            CartItemModel item = new CartItemModel(items.child("name").getValue().toString(),items.child("image").getValue().toString(),items.child("price").getValue(Integer.class),items.child("count").getValue().toString());
-//                            cartArrayList.add(item);
-//                        }
-//                        Log.d("helpme",orders.getKey().toString()+cartArrayList);
                         OrderHistoryModel order= new OrderHistoryModel(orders.getKey().toString(),orders.child("States").getValue().toString());
                         orderHistoryArrayList.add(order);
-//                        Log.d("helpme","gfsdgfds"+order.cartItemModelArrayList().toString());
-
-
                     }
                 }
                 orderHistoryAdapter = new OrderHistoryAdapter(OrderHistoryActivity.this, orderHistoryArrayList);

@@ -22,10 +22,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     ArrayList<CartItemModel> itemArrayList;
 
 
-    public CartAdapter(ArrayList<CartItemModel> itemArrayList) {
-        this.itemArrayList = itemArrayList;
-    }
-
     public CartAdapter(Context context, ArrayList<CartItemModel> itemArrayList) {
         this.context = context;
         this.itemArrayList = itemArrayList;
@@ -69,8 +65,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             cartItemName=itemView.findViewById(R.id.cartItemName);
             cartItemPrice=itemView.findViewById(R.id.cartItemPrice);
             cartItemCount=itemView.findViewById(R.id.cartItemCount);
-
-
 
         }
     }

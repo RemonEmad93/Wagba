@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements RestaurantRecycle
         }
 
         currentUserEmail=auth.getCurrentUser().getEmail();
-//        Log.d("plzdata",auth.getCurrentUser().getEmail());
 
 
         database = FirebaseDatabase.getInstance();

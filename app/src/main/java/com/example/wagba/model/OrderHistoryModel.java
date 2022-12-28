@@ -1,11 +1,9 @@
 package com.example.wagba.model;
 
-import java.util.ArrayList;
 
 public class OrderHistoryModel {
     public String time;
     public String States;
-//    public ArrayList<CartItemModel> cartItemModelArrayList;
 
     public OrderHistoryModel(String time, String states) {
         this.time = time;
@@ -20,7 +18,5 @@ public class OrderHistoryModel {
         return States;
     }
 
-//    public ArrayList<CartItemModel> cartItemModelArrayList() {
-//        return cartItemModelArrayList;
-//    }
+
 }

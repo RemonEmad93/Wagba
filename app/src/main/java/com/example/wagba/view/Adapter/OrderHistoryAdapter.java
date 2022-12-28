@@ -24,14 +24,11 @@ import java.util.ArrayList;
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder> {
 
     Activity activity;
-
-//    ArrayList<CartItemModel> itemArrayList;
     ArrayList<OrderHistoryModel> orderHistoryModel;
 
     public OrderHistoryAdapter(Activity activity,ArrayList<OrderHistoryModel> orderHistoryModel ){
         this.activity=activity;
         this.orderHistoryModel=orderHistoryModel;
-//        this.itemArrayList=itemArrayList;
     }
 
 
@@ -39,7 +36,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public OrderHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.order_history_item,parent,false);
-
         return new OrderHistoryViewHolder(view);
     }
 
@@ -49,14 +45,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         OrderHistoryModel item=orderHistoryModel.get(position);
         holder.orderDate.setText(item.getTime());
         holder.orderStatus.setText(item.getStates());
-
-//        Log.d("helpme",item.cartItemModelArrayList.toString());
-//        CartAdapter cartAdapter= new CartAdapter(item.cartItemModelArrayList());
-//        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(activity);
-//        holder.orderItems.setLayoutManager(linearLayoutManager);
-//        holder.orderItems.setAdapter(cartAdapter);
-//        cartAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -69,14 +57,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
         TextView orderDate;
         TextView orderStatus;
-//        RecyclerView orderItems;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             orderDate= itemView.findViewById(R.id.orderDateTextView);
             orderStatus= itemView.findViewById(R.id.orderStatusTextView);
-//            orderItems= itemView.findViewById(R.id.orderRecyclerView);
 
         }
     }

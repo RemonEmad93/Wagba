@@ -32,7 +32,6 @@ public class ProfileActivity extends AppCompatActivity {
         databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
         databaseViewModel.getAllData().observe(this, data ->{
             for(DatabaseModel databaseModel: data){
-//                Log.d("plzdata",SignUpActivity.userEmail+"fdsfsdfds"+databaseModel.getEmail());
                 if(Objects.equals(MainActivity.currentUserEmail, databaseModel.getEmail())){
                     binding.ProfileNameTextView.setText(databaseModel.getName());
                     binding.ProfileEmailTextView.setText(databaseModel.getEmail());

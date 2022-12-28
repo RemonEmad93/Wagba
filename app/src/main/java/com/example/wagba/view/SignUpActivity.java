@@ -24,7 +24,6 @@ public class SignUpActivity extends AppCompatActivity {
     Intent homeInt,loginInt;
     private DatabaseModel databaseModel;
     private DatabaseViewModel databaseViewModel;
-//    public static String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,5 @@ public class SignUpActivity extends AppCompatActivity {
         //pass the entered data to viewModel to insert data in firebase database
         signUpViewModel.signUp(username, email, password, phone_number);
 
-//        userEmail=email;
-//        Log.d("plzdata",userEmail);
     }
 }

@@ -26,16 +26,6 @@ public class DatabaseModel {
     @ColumnInfo(name = "phone_number")
     private String phone_number;
 
-//    public DatabaseModel(){
-//
-//    }
-//
-//    public DatabaseModel(@NonNull String uid, @NonNull String name, @NonNull String email, @NonNull String phone_number) {
-//        this.uid = uid;
-//        this.name = name;
-//        this.email = email;
-//        this.phone_number = phone_number;
-//    }
 
     public DatabaseModel(@NonNull String name, @NonNull String email, @NonNull String phone_number) {
         this.name = name;

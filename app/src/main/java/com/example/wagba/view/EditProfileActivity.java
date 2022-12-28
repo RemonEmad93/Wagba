@@ -53,12 +53,9 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //insert user data into room database
-//                databaseModel= new DatabaseModel( );
-                Log.d("helpplz","hrere"+binding.ProfileNameEditText.getText().toString());
                 databaseModelObject.setName(binding.ProfileNameEditText.getText().toString());
                 databaseModelObject.setEmail(binding.ProfileEmailEditText.getText().toString());
                 databaseModelObject.setPhone_number(binding.ProfilePhoneNumberEditText.getText().toString());
-//                databaseViewModel= new ViewModelProvider(this).get(DatabaseViewModel.class);
                 databaseViewModel.updateProfile(databaseModelObject);
 
                 startActivity(profileInt);
